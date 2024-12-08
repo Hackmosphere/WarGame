@@ -1,0 +1,58 @@
+version: '3'
+services:
+  Kali:
+    #image: 'sadry/sadry:tp_pen_kali'
+    image: 'hackmosphere/kali:latest'
+    container_name: kali
+    stdin_open: true
+    tty: true
+    ports:
+      - '9020:8080'
+      - '9021:5900'
+    networks:
+      - pentestnetwork
+  Samba:
+    image: 'hackmosphere/fileshare:latest'
+    container_name: fileshare
+    stdin_open: true
+    tty: true
+    ports:
+      - '445:445'
+    networks:
+      - pentestnetwork
+      - pentestpivot
+  Web:
+    image: 'hackmosphere/web:latest'
+    container_name: web
+    stdin_open: true
+    tty: true
+    networks:
+      - pentestpivot
+      - pentestsuperpivot
+  redis:
+    image: 'hackmosphere/caching:latest'
+    container_name: caching
+    stdin_open: true
+    tty: true
+    networks:
+       - pentestsuperpivot
+  smtpd:
+    image: 'hackmosphere/email:latest'
+    container_name: email
+    stdin_open: true
+    tty: true
+    networks:
+      - pentestsuperpivot
+
+volumes:
+  data_volSamba:
+  data_volPHP:
+  data_volKali:
+  data_volWeb: 
+networks: 
+  pentestnetwork:
+    driver: bridge
+  pentestpivot:
+    driver: bridge
+  pentestsuperpivot:
+    driver: bridge
