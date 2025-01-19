@@ -1,7 +1,6 @@
 version: '3'
 services:
   Kali:
-    #image: 'sadry/sadry:tp_pen_kali'
     image: 'hackmosphere/kali:latest'
     container_name: kali
     stdin_open: true
@@ -11,7 +10,7 @@ services:
       - '9021:5900'
     networks:
       - pentestnetwork
-  Samba:
+  Fileshare:
     image: 'hackmosphere/fileshare:latest'
     container_name: fileshare
     stdin_open: true
@@ -29,16 +28,16 @@ services:
     networks:
       - pentestpivot
       - pentestsuperpivot
-  redis:
+  Caching:
     image: 'hackmosphere/caching:latest'
     container_name: caching
     stdin_open: true
     tty: true
     networks:
        - pentestsuperpivot
-  smtpd:
+  Mail:
     image: 'hackmosphere/email:latest'
-    container_name: email
+    container_name: mail
     stdin_open: true
     tty: true
     networks:
