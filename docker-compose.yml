@@ -5,10 +5,15 @@ services:
     container_name: kali
     stdin_open: true
     tty: true
-    ports:
-      - '9020:8080'
-      - '9021:5900'
     networks:
+      - pentestnetwork
+  Web:
+    image: 'hackmosphere/web:latest'
+    container_name: web
+    stdin_open: true
+    tty: true
+    networks:
+      - pentestpivot
       - pentestnetwork
   Fileshare:
     image: 'hackmosphere/fileshare:latest'
@@ -18,16 +23,8 @@ services:
     ports:
       - '445:445'
     networks:
-      - pentestnetwork
-      - pentestpivot
-  Web:
-    image: 'hackmosphere/web:latest'
-    container_name: web
-    stdin_open: true
-    tty: true
-    networks:
-      - pentestpivot
       - pentestsuperpivot
+      - pentestpivot
   Caching:
     image: 'hackmosphere/caching:latest'
     container_name: caching
@@ -41,7 +38,7 @@ services:
     stdin_open: true
     tty: true
     networks:
-      - pentestsuperpivot
+      - pentestpivot
 
 volumes:
   data_volSamba:
